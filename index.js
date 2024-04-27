@@ -64,8 +64,6 @@ async function run() {
                     seasonality: updatedPlace.seasonality,
                     travelTime: updatedPlace.travelTime,
                     totaVisitors: updatedPlace.totaVisitors,
-                    email: updatedPlace.email,
-                    name: updatedPlace.name,
                 }
             }
             const result = await tourismCollection.updateOne(filter, place, options);
