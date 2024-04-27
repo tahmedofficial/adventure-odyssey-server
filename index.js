@@ -48,6 +48,29 @@ async function run() {
             res.send(result);
         })
 
+        app.put("/travel/:id", async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const updatedPlace = req.body;
+            const place = {
+                $set: {
+                    photo: updatedPlace.photo,
+                    touristsSpot: updatedPlace.touristsSpot,
+                    countryName: updatedPlace.countryName,
+                    location: updatedPlace.location,
+                    description: updatedPlace.description,
+                    averageCost: updatedPlace.averageCost,
+                    seasonality: updatedPlace.seasonality,
+                    travelTime: updatedPlace.travelTime,
+                    totaVisitors: updatedPlace.totaVisitors,
+                    email: updatedPlace.email,
+                    name: updatedPlace.name,
+                }
+            }
+            const result = await tourismCollection.updateOne(filter, place, options);
+            res.send(result);
+        })
 
         app.delete("/travel/:id", async (req, res) => {
             const id = req.params.id;
