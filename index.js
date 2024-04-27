@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -34,10 +34,25 @@ async function run() {
             res.send(result)
         })
 
+        app.get("/travel/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await tourismCollection.findOne(query);
+            res.send(result);
+        })
+
         app.post("/travel", async (req, res) => {
             const data = req.body;
             console.log(data);
             const result = await tourismCollection.insertOne(data);
+            res.send(result);
+        })
+
+
+        app.delete("/travel/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await tourismCollection.deleteOne(query);
             res.send(result);
         })
 
